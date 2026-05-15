@@ -6,6 +6,7 @@ import icd10  # noqa: F401
 import loinc  # noqa: F401
 import rxnorm  # noqa: F401
 import npi  # noqa: F401
+import batch  # noqa: F401
 
 
 @mcp.resource("terminology://about")
