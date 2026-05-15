@@ -1,4 +1,6 @@
 # tests/test_icd10.py
+import pytest
+
 import icd10
 
 
@@ -27,6 +29,5 @@ def test_search_icd10_empty_result(fake_responses):
 
 
 def test_search_icd10_rejects_blank_query():
-    import pytest
     with pytest.raises(ValueError, match="query cannot be empty"):
         icd10.search_icd10("   ")

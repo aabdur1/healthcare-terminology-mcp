@@ -8,6 +8,7 @@ import rxnorm  # noqa: F401
 
 @mcp.resource("terminology://about")
 def about() -> str:
+    # Update this string when tools are added (tracked in Task 12).
     return (
         "Healthcare Terminology MCP\n\n"
         "Tools:\n"
