@@ -1,6 +1,7 @@
 # main.py
 from server import mcp
 
+import hcpcs  # noqa: F401
 import icd10  # noqa: F401
 import loinc  # noqa: F401
 import rxnorm  # noqa: F401

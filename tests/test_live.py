@@ -39,3 +39,11 @@ def test_npi_live_lookup():
     results = npi_mod.search_npi(last_name="Smith", state="IL", max_results=3)
     assert len(results) >= 1
     assert all("npi" in r for r in results)
+
+
+import hcpcs as hcpcs_mod
+
+
+def test_hcpcs_live_lookup():
+    results = hcpcs_mod.search_hcpcs("wheelchair", max_results=3)
+    assert len(results) >= 1
