@@ -5,6 +5,7 @@ import http_client
 import icd10
 import loinc
 import rxnorm
+import npi as npi_mod
 
 pytestmark = pytest.mark.live
 
@@ -32,3 +33,9 @@ def test_rxnorm_live_lookup():
     results = rxnorm.search_rxnorm("metformin", max_results=3)
     assert len(results) >= 1
     assert results[0]["name"]
+
+
+def test_npi_live_lookup():
+    results = npi_mod.search_npi(last_name="Smith", state="IL", max_results=3)
+    assert len(results) >= 1
+    assert all("npi" in r for r in results)
