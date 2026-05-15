@@ -12,13 +12,20 @@ import prompts  # noqa: F401
 
 @mcp.resource("terminology://about")
 def about() -> str:
-    # Update this string when tools are added (tracked in Task 12).
     return (
         "Healthcare Terminology MCP\n\n"
-        "Tools:\n"
-        "  - search_icd10: ICD-10-CM diagnosis codes (NLM Clinical Tables)\n"
-        "  - search_loinc: LOINC lab/observation codes (NLM Clinical Tables)\n"
-        "  - search_rxnorm: RxNorm medication concepts (NLM RxNav)\n\n"
+        "Terminology search:\n"
+        "  - search_icd10 / expand_icd10: ICD-10-CM diagnosis codes\n"
+        "  - search_loinc: LOINC lab/observation codes\n"
+        "  - search_rxnorm: RxNorm medication concepts\n"
+        "  - search_hcpcs: HCPCS Level II Medicare codes\n"
+        "  - search_npi: CMS provider directory\n\n"
+        "Crosswalks:\n"
+        "  - ndc_to_rxcui, rxcui_to_ndcs\n\n"
+        "Batch operations:\n"
+        "  - batch_search_icd10, batch_search_loinc, batch_search_rxnorm\n\n"
+        "Prompts:\n"
+        "  - code_chart_note, summarize_med_list\n\n"
         "All endpoints are public and require no API key."
     )
 
