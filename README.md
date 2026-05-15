@@ -1,5 +1,7 @@
 # Healthcare Terminology MCP
 
+[![tests](https://github.com/aabdur1/healthcare-terminology-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/aabdur1/healthcare-terminology-mcp/actions/workflows/test.yml)
+
 An [MCP](https://modelcontextprotocol.io) server that lets Claude (or any MCP client) look up clinical codes from the U.S. National Library of Medicine's public APIs:
 
 - **ICD-10-CM** diagnosis codes
