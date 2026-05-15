@@ -53,4 +53,4 @@ def test_expand_icd10_returns_subcodes(fake_responses):
 
 def test_expand_icd10_rejects_blank():
     with pytest.raises(ValueError, match="prefix cannot be empty"):
-        icd10.expand_icd10("")
+        icd10.expand_icd10("   ")
