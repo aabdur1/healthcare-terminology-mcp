@@ -60,3 +60,46 @@ def _rxnorm_name(rxcui: str) -> str:
         return data.get("properties", {}).get("name", "")
     except httpx.HTTPError:
         return ""
+
+
+@mcp.tool(
+    name="ndc_to_rxcui",
+    description=(
+        "Map a National Drug Code (NDC) to its RxNorm RxCUI. NDC is the "
+        "identifier on prescription packaging; RxCUI is the clinical concept "
+        "used in EHRs. Returns the RxCUI or None if no match."
+    ),
+)
+def ndc_to_rxcui(
+    ndc: Annotated[str, Field(description="11-digit NDC, hyphenated or plain.")],
+) -> dict[str, Any]:
+    if not ndc.strip():
+        raise ValueError("ndc cannot be empty")
+
+    data = http_client.get_json(
+        f"{RXNORM_BASE}/rxcui.json",
+        {"idtype": "NDC", "id": ndc},
+    )
+    rxnorm_ids = data.get("idGroup", {}).get("rxnormId") or []
+    return {"ndc": ndc, "rxcui": rxnorm_ids[0] if rxnorm_ids else None}
+
+
+@mcp.tool(
+    name="rxcui_to_ndcs",
+    description=(
+        "List every NDC associated with a given RxNorm RxCUI. Useful for "
+        "expanding a clinical drug concept into all packaged forms found "
+        "in pharmacy claims data."
+    ),
+)
+def rxcui_to_ndcs(
+    rxcui: Annotated[str, Field(description="RxNorm RxCUI identifier.")],
+) -> dict[str, Any]:
+    if not rxcui.strip():
+        raise ValueError("rxcui cannot be empty")
+
+    data = http_client.get_json(
+        f"{RXNORM_BASE}/rxcui/{rxcui}/ndcs.json", {}
+    )
+    ndcs = data.get("ndcGroup", {}).get("ndcList", {}).get("ndc", []) or []
+    return {"rxcui": rxcui, "ndcs": list(ndcs)}
