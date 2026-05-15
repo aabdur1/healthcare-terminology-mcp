@@ -22,3 +22,21 @@ def fake_responses(monkeypatch):
 
     monkeypatch.setattr(http_client, "get_json", fake_get)
     return responses
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--run-live",
+        action="store_true",
+        default=False,
+        help="run live tests that hit real NLM/CMS APIs",
+    )
+
+
+def pytest_collection_modifyitems(config, items):
+    if config.getoption("--run-live"):
+        return
+    skip_live = pytest.mark.skip(reason="needs --run-live to execute")
+    for item in items:
+        if "live" in item.keywords:
+            item.add_marker(skip_live)
