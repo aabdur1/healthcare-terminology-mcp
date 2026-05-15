@@ -1,6 +1,7 @@
 # tests/test_live.py
 import pytest
 
+import http_client
 import icd10
 import loinc
 import rxnorm
@@ -8,8 +9,15 @@ import rxnorm
 pytestmark = pytest.mark.live
 
 
+@pytest.fixture(autouse=True)
+def _clear_cache():
+    """Force every live test to hit the real network, not the lru_cache."""
+    http_client.clear_cache()
+    yield
+
+
 def test_icd10_live_lookup():
-    results = icd10.search_icd10("diabetes type 2", max_results=3)
+    results = icd10.search_icd10("type 2 diabetes", max_results=3)
     assert len(results) >= 1
     assert all("code" in r and "description" in r for r in results)
 
